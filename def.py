@@ -20,7 +20,7 @@ def Tambah ():
                  (int(uts)/100*35) + (int(uas) / 100*35))
         dataMhs[nim] = {"nama": nama, "tugas": tugas,
                         "uts": uts, "uas": uas, "akhir": akhir}
-def Lihat ():
+def Tampilkan ():
     print("Daftar Nilai")
     Jdl_Tbl()
     if len(dataMhs) == 0:
@@ -53,7 +53,7 @@ def cariNama(nama):
     if (found ==0):
         print("Data tidak ada")
     print("=========================================================================")
-def Ubah(nim):
+def UbahNim(nim):
     if (dataMhs.get(nim, "kosong") != "kosong"):
             nama = input("Masukan Nama         : ")
             if nama == "":
@@ -74,6 +74,49 @@ def Ubah(nim):
             print("Berhasil Mengubah Data")
     else:
             print("Data tidak ditemukan.\nPastikan anda memasukan NIM yang benar ")
+def Ubah(nama):
+    found = 0
+    for i, j in dataMhs.items():
+        if ((dataMhs.get(i)).get('nama') == nama):
+            found = i 
+    if (found ==0):
+        print("Data tidak ada")
+    else :
+            nama = input("Masukan Nama         : ")
+            if nama == "":
+                nama = dataMhs[nim]['nama']
+            tugas = input("Masukan Nilai Tugas  : ")
+            if tugas == "":
+                tugas = dataMhs[nim]['tugas']
+            uts = input("Masukan Nilai UTS    : ")
+            if uts == "":
+                uts = dataMhs[nim]['uts']
+            uas = input("Masukan Nilai UAS    : ")
+            if uas == "":
+                uas = dataMhs[nim]['uas']
+            akhir = ((int(tugas) / 100*30) +
+                     (int(uts)/100*35) + (int(uas) / 100*35))
+            dataMhs[found] = {"nama": nama, "tugas": tugas,
+                            "uts": uts, "uas": uas, "akhir": akhir}
+            print("Berhasil Mengubah Data")
+            
+def Hapus(nama):
+    found = 0
+    for i, j in dataMhs.items():
+        if ((dataMhs.get(i)).get('nama') == nama):
+            found = i 
+    if (found ==0):
+        print("Data tidak ada")
+    else :
+        dataMhs.pop(i)
+    
+def HapusNim(nim):
+        if (dataMhs.get(nim, "kosong") != "kosong"):
+            dataMhs.pop(nim)
+            print("Berhasil menghapus data mahasiswa")
+        else:
+            print("Data tidak ditemukan.\nPastikan anda memasukan NIM yang benar ")
+        
             
 print("                         Program Input Nilai")
 print("=========================================================================")
@@ -82,30 +125,38 @@ while True:
     if menu.capitalize() == "T":
         Tambah()
     if menu.capitalize() == "L":
-        Lihat()
+        Tampilkan()
     if menu.capitalize() == "U":
         print("Mengubah data Mahasiswa")
-        nim = input("Masukan NIM          : ")
-        Ubah(nim)
+        SearchBy = input("Hapus data berdasarkan ( 1. ) NIM atau ( 2. ) Nama : ")
+        if SearchBy == "1" :
+            nim = input("Masukan NIM :")
+            UbahNim(nim)
+        elif SearchBy == "2" :
+            nama = input("Masukan Nama : ")
+            Ubah(nama)
 
     if menu.capitalize() == "H":
         print("Menghapus data Mahasiswa")
-        nim = input("Masukan NIM : ")
-        if (dataMhs.get(nim, "kosong") != "kosong"):
-            dataMhs.pop(nim)
-            print("Berhasil menghapus data mahasiswa")
-        else:
-            print("Data tidak ditemukan.\nPastikan anda memasukan NIM yang benar ")
+        SearchBy = input("Hapus data berdasarkan ( 1. ) NIM atau ( 2. ) Nama : ")
+        if SearchBy == "1" :
+            nim = input("Masukan NIM :")
+            HapusNim(nim)
+        elif SearchBy == "2" :
+            nama = input("Masukan Nama : ")
+            Hapus(nama)
+            
 
     if menu.capitalize() == "C":
         print("Mencari Nilai Mahasiswa")
-        SearchBy = input("Cari berdasarkan 1. NIM atau 2. Nama :")
+        SearchBy = input("Cari berdasarkan ( 1. ) NIM atau ( 2. ) Nama : ")
         if SearchBy == "1" :
             nim = input("Masukan NIM :")
             cariNIM(nim)
         elif SearchBy == "2" :
             nama = input("Masukan Nama : ")
             cariNama(nama)
+            
             
     if menu.capitalize() == "K":
         print("Keluar dari program..")
